@@ -1,47 +1,69 @@
 import React, { Component } from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View, Text} from 'react-native';
+import axios from 'axios';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { API_URL } from '../../app.consts';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class AnimalList extends Component {
+  state = {
+    animals: [],
+  };
+
+  componentDidMount() {
+    axios.get(`${API_URL}/animal`).then((res) => {
+      const animals = res.data;
+      this.setState({ animals });
+    });
+  }
+
   render() {
+    const { animals } = this.state;
+    let cards = null;
+
+    if (animals.length > 0) {
+      cards = animals.map((item, index) => {
+        return (
+          <View style={styles.card}>
+            <View>
+              <Text style={styles.nomeAnimal}>{item.nome}</Text>
+            </View>
+            <View style={styles.containerInfo}>
+              <View>
+                <View>
+                  <Text style={styles.subtitulo}>Tipo de Animal</Text>
+                </View>
+                <View style={styles.tipoAnimalContainer}>
+                  <View style={styles.tipoAnimalBadge}>
+                    <Text style={styles.tipoAnimal}>{item.tipo}</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.containerPeso}>
+                <View>
+                  <Text style={styles.subtitulo}>Peso</Text>
+                </View>
+                <View style={styles.pesoAnimal}>
+                  <Text style={styles.pesoAnimal}>344,5 kg</Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View style={styles.localAnimalContainer}>
+                <Icon style={styles.iconeLocal} name="md-home" size={25} />
+                <Text style={styles.localAnimal}>Galpão 1</Text>
+              </View>
+            </View>
+          </View>
+        );
+      });
+    }
+
     return (
       <SafeAreaView>
         <ScrollView>
           <Text style={styles.title}>Lista de animais</Text>
-          <View style={styles.container}>
-            <View style={styles.card}>
-              <View>
-                <Text style={styles.nomeAnimal}>Cocoricó</Text>
-              </View>
-              <View style={styles.containerInfo}>
-                <View>
-                  <View>
-                    <Text style={styles.subtitulo}>Tipo de Animal</Text>
-                  </View>
-                  <View style={styles.tipoAnimalContainer}>
-                    <View style={styles.tipoAnimalBadge}>
-                      <Text style={styles.tipoAnimal}>Poultry</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.containerPeso}>
-                  <View>
-                    <Text style={styles.subtitulo}>Peso</Text>
-                  </View>
-                  <View style={styles.pesoAnimal}>
-                    <Text style={styles.pesoAnimal}>344,5 kg</Text>
-                  </View>
-                </View>
-              </View>
-              <View>
-                <View style={styles.localAnimalContainer}>
-                  <Icon style={styles.iconeLocal} name="md-home" size={25} />
-                  <Text style={styles.localAnimal}>Galpão 1</Text>
-                </View>
-              </View>
-            </View>
-          </View>
+          {cards}
         </ScrollView>
       </SafeAreaView>
     );
@@ -107,6 +129,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 12,
+    textTransform: 'capitalize',
   },
   pesoAnimal: {
     fontWeight: 'bold',
