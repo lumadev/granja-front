@@ -7,16 +7,30 @@
  */
 
 import React from 'react';
-import { StatusBar } from 'react-native';
-import AnimalList from './src/components/animal/AnimalList';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack'
 
-function App() {
+import AnimalList from './src/components/animal/AnimalList';
+import AnimalProfile from './src/components/animal/AnimalProfile';
+
+export default function App() {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <AnimalList />
+      <AppContainer />
     </>
   );
 }
 
-export default App;
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: AnimalList,
+    navigationOptions: {
+      headerShown: false
+    },
+  },
+  Profile: {
+    screen: AnimalProfile
+  }
+});
+
+const AppContainer = createAppContainer(AppNavigator);

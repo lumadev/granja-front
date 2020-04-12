@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
-import { SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Alert } from 'react-native';
-import { API_URL } from '../../app.consts';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Alert} from 'react-native';
+import {API_URL} from '../../app.consts';
 import AnimalCard from './AnimalCard';
 import AppUtils from '../../app.utils';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -23,6 +25,10 @@ class AnimalList extends Component {
         animalsApi: animals
       });
     });
+  }
+
+  navigateToProfile() {
+    this.props.navigation.navigate('Profile')
   }
 
   handleChangeNome(nomeSearch) {
@@ -95,6 +101,7 @@ class AnimalList extends Component {
           <AnimalCard 
             key={item.id} 
             animal={item}
+            navigateToProfile={this.navigateToProfile.bind(this)}
             createAlertDelete={this.createAlertDelete.bind(this)}>
           </AnimalCard>
         );

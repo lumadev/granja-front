@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import AnimalProfile from './AnimalProfile';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class AnimalCard extends Component {
-  
+
   render() {
-    const { animal, createAlertDelete } = this.props;
+    const { animal, navigateToProfile, createAlertDelete } = this.props;
 
     return (
       <View style={styles.card}>
@@ -43,8 +44,8 @@ class AnimalCard extends Component {
             </View>
           </View>
           <View style={styles.containerBotoes}>
-            <Icon style={styles.icon} name="md-eye" />
-            <Icon style={styles.icon} name="md-trash" onPress={() => {createAlertDelete(animal.id)}} />
+            <Icon style={styles.icon} name="md-eye" onPress={() => navigateToProfile()} />
+            <Icon style={styles.icon} name="md-trash" onPress={() => createAlertDelete(animal.id)} />
           </View>
         </View>
       </View>
