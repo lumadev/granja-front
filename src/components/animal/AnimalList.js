@@ -11,6 +11,8 @@ class AnimalList extends Component {
   state = {
     animalsApi: [],
     animals: [],
+    nomeSearch: '',
+    localizacaoSearch: ''
   };
 
   componentDidMount() {
@@ -23,18 +25,36 @@ class AnimalList extends Component {
     });
   }
 
-  search(text) {
-    const { animalsApi } = this.state;
-    const textFormated = AppUtils.prepareStringToSearch(text);
+  handleChangeNome(nomeSearch) {
+    const { localizacaoSearch } = this.state;
+    this.setState({ nomeSearch });
 
-    if (textFormated === '') {
+    this.search(nomeSearch, localizacaoSearch)
+  }
+
+  handleChangeLocalizacao(localizacaoSearch) {
+    const { nomeSearch } = this.state;
+    this.setState({ localizacaoSearch });
+
+    this.search(nomeSearch, localizacaoSearch)
+  }
+
+  search(nomeSearch, localizacaoSearch) {
+    const { animalsApi } = this.state;
+
+    const nomeFormated = AppUtils.prepareStringToSearch(nomeSearch);
+    const localizacaoFormated = AppUtils.prepareStringToSearch(localizacaoSearch);
+
+    if (nomeFormated === '' && localizacaoFormated === '') {
       this.setState({ animals: animalsApi });
       return;
     }
 
     const animalsSearch = animalsApi.filter((animal) => {
       const nome = AppUtils.prepareStringToSearch(animal.nome);
-      return nome.includes(textFormated);
+      const localizacao = AppUtils.prepareStringToSearch(animal.localizacao);
+
+      return nome.includes(nomeFormated) && localizacao.includes(localizacaoFormated);
     });
 
     this.setState({ animals: animalsSearch });
@@ -85,13 +105,25 @@ class AnimalList extends Component {
       <SafeAreaView>
         <ScrollView>
           <Text style={styles.title}>Lista de animais</Text>
-          <View style={styles.searchContainer}>
+          <View style={[styles.searchContainer, styles.searchNome]}>
             <Icon style={styles.iconSearch} name="md-search" />
-            <TextInput style={styles.inputSearch}
-              onChangeText={(text) => {this.search(text)}}
+            <TextInput 
+              style={styles.inputSearch}
+              placeholder="Nome"
+              onChange={(event) => {this.handleChangeNome(event.nativeEvent.text)}}
             />
           </View>
-          {cards}
+          <View style={[styles.searchContainer, styles.searchLocalizacao]}>
+            <Icon style={styles.iconSearch} name="md-search" />
+            <TextInput 
+              style={styles.inputSearch}
+              placeholder="Localização"
+              onChange={(event) => {this.handleChangeLocalizacao(event.nativeEvent.text)}}
+            />
+          </View>
+          <View style={styles.cardContainer}>
+            {cards}
+          </View>
         </ScrollView>
       </SafeAreaView>
     );
@@ -107,6 +139,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#1c1c1c',
   },
+  cardContainer: {
+    marginBottom: 12
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -114,6 +149,13 @@ const styles = StyleSheet.create({
     borderColor: '#dcdcdc',
     borderWidth: 1,
     borderRadius: 8
+  },
+  searchNome: {
+    marginTop: 10
+  },
+  searchLocalizacao: {
+    marginTop: 10,
+    marginBottom: 4
   },
   iconSearch: {
     marginLeft: 14,

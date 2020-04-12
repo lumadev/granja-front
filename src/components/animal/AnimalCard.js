@@ -38,7 +38,7 @@ class AnimalCard extends Component {
             <View>
               <View style={styles.localAnimalContainer}>
                 <Icon style={styles.iconeLocal} name="md-home" size={25} />
-                <Text style={styles.localAnimal}>Galpão 1</Text>
+                <Text style={styles.localAnimal}>{animal.localizacao}</Text>
               </View>
             </View>
           </View>
