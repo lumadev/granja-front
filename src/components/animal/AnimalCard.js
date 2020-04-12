@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import AnimalProfile from './AnimalProfile';
+import TipoAnimalBadge from './TipoAnimalBadge';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,9 +22,7 @@ class AnimalCard extends Component {
                   <Text style={styles.subtitulo}>Tipo de Animal</Text>
                 </View>
                 <View style={styles.tipoAnimalContainer}>
-                  <View style={styles.tipoAnimalBadge}>
-                    <Text style={styles.tipoAnimal}>{animal.tipo}</Text>
-                  </View>
+                  <TipoAnimalBadge tipoAnimal={animal.tipo}></TipoAnimalBadge>
                 </View>
               </View>
               <View style={styles.containerPeso}>
@@ -44,7 +42,7 @@ class AnimalCard extends Component {
             </View>
           </View>
           <View style={styles.containerBotoes}>
-            <Icon style={styles.icon} name="md-eye" onPress={() => navigateToProfile()} />
+            <Icon style={styles.icon} name="md-eye" onPress={() => navigateToProfile(animal.id)} />
             <Icon style={styles.icon} name="md-trash" onPress={() => createAlertDelete(animal.id)} />
           </View>
         </View>
@@ -103,20 +101,6 @@ const styles = StyleSheet.create({
   },
   tipoAnimalContainer: {
     marginTop: 5,
-  },
-  tipoAnimalBadge: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 65,
-    height: 22,
-    borderRadius: 12,
-    backgroundColor: '#0047ab',
-  },
-  tipoAnimal: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 12,
-    textTransform: 'capitalize',
   },
   pesoAnimal: {
     fontWeight: 'bold',
