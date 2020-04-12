@@ -29,7 +29,10 @@ const AppNavigator = createStackNavigator({
     },
   },
   Profile: {
-    screen: AnimalProfile
+    screen: AnimalProfile,
+    navigationOptions: {
+      title: 'Perfil do Animal'
+    },
   }
 });
 

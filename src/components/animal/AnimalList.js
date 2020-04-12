@@ -4,9 +4,6 @@ import {SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Alert} from
 import {API_URL} from '../../app.consts';
 import AnimalCard from './AnimalCard';
 import AppUtils from '../../app.utils';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack'
-
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class AnimalList extends Component {
@@ -27,8 +24,8 @@ class AnimalList extends Component {
     });
   }
 
-  navigateToProfile() {
-    this.props.navigation.navigate('Profile')
+  navigateToProfile(animalId) {
+    this.props.navigation.navigate('Profile', {animalId})
   }
 
   handleChangeNome(nomeSearch) {
@@ -155,7 +152,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderColor: '#dcdcdc',
     borderWidth: 1,
-    borderRadius: 8
+    borderRadius: 8,
+    backgroundColor: 'white'
   },
   searchNome: {
     marginTop: 10
