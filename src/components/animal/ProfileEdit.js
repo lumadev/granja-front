@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { StyleSheet, SafeAreaView, ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import {API_URL} from '../../app.consts';
 
@@ -8,7 +8,8 @@ import Toast from 'react-native-simple-toast';
 
 class ProfileEdit extends Component {
   state = {
-    animal: null
+    animal: null,
+    showLoader: false,
   };
 
   componentDidMount() {
@@ -29,6 +30,8 @@ class ProfileEdit extends Component {
   }
 
   editAnimal() {
+    this.setState({ showLoader: true });
+
     let { status, nome } = this.state.animal;
     status = status.toLowerCase();
 
@@ -38,6 +41,7 @@ class ProfileEdit extends Component {
     axios.put(`${API_URL}/animal/${animalId}`, data).then((res) => {
       Toast.show('Animal salvo com sucesso');
 
+      this.setState({ showLoader: false });
       this.props.navigation.navigate('Home')
 
     }).catch(error => {
@@ -46,7 +50,7 @@ class ProfileEdit extends Component {
   }
 
   render() {
-    const { animal } = this.state;
+    const { animal, showLoader } = this.state;
 
     return (
       <SafeAreaView>
@@ -76,6 +80,9 @@ class ProfileEdit extends Component {
               <Text style={styles.botaoSalvar}>Salvar</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.loaderContainer}>
+            { showLoader === true ? <ActivityIndicator style={styles.loaderContainer} size="large" color="black" /> : null }
+          </View>
         </ScrollView>
       </SafeAreaView>
     );
@@ -83,24 +90,29 @@ class ProfileEdit extends Component {
 }
 
 const styles = StyleSheet.create({
+  loaderContainer: {
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   containerEdit: {
     marginTop: 20,
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   label: {
-    fontSize: 16,
+    fontSize: 16
   },
   labelStatus: {
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 10
   },
   input: {
     paddingLeft: 16,
     marginTop: 8,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   select: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   botaoSalvarContainer: {
     justifyContent: 'center',
@@ -108,10 +120,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: 'black',
     height: 40,
-    borderRadius: 3,
+    borderRadius: 3
   },
   botaoSalvar: {
-    color: 'white',
+    color: 'white'
   }
 });
 
