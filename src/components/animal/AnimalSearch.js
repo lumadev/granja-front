@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, TextInput} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class AnimalSearch extends Component {

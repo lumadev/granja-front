@@ -92,39 +92,39 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   containerTitle: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 24
   },
   containerBadge: {
     marginLeft: 16,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   containerEdit: {
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   iconEdit: {
     marginLeft: 25,
     fontSize: 18
   },
   infoFont: {
-    fontSize: 16,
+    fontSize: 16
   },
   containerInfo: {
     marginTop: 8,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   separator: {
     marginVertical: 15,
     marginRight: 20,
     borderTopWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#dcdcdc',
+    borderColor: '#dcdcdc'
   },
   tipoInfo: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   }
 });
 

@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Alert} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, Alert } from 'react-native';
 import {API_URL} from '../../app.consts';
 import AnimalSearch from './AnimalSearch';
 import AnimalCard from './AnimalCard';
@@ -11,10 +11,15 @@ class AnimalList extends Component {
     animalsApi: [],
     animals: [],
     nomeSearch: '',
-    localizacaoSearch: ''
+    localizacaoSearch: '',
+    showLoader: false
   };
 
   componentDidMount() {
+    this.listaAnimais();
+  }
+
+  listaAnimais() {
     axios.get(`${API_URL}/animal`).then((res) => {
       const animals = res.data;
       this.setState({ 
@@ -129,7 +134,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: '600',
     fontSize: 25,
-    color: '#1c1c1c',
+    color: '#1c1c1c'
   },
   cardContainer: {
     marginBottom: 12

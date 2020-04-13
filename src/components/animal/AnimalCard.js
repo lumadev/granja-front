@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {TouchableHighlight, StyleSheet, View, Text} from 'react-native';
+import React, { Component } from 'react';
+import { TouchableHighlight, StyleSheet, View, Text } from 'react-native';
 import TipoAnimalBadge from './TipoAnimalBadge';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -62,30 +62,30 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 2,
     borderColor: '#daeff8',
-    borderRadius: 8,
+    borderRadius: 8
   },
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   containerAnimal: {
-    flex: 0.93,
+    flex: 0.93
   },
   containerBotoes: {
     flex: 0.07,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: 30,
+    width: 30
   },
   nomeAnimal: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 20
   },
   containerInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 6,
+    marginTop: 6
   },
   containerPeso: {
     marginRight: 40,
@@ -93,36 +93,36 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderLeftWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#dcdcdc',
+    borderColor: '#dcdcdc'
   },
   subtitulo: {
     textTransform: 'uppercase',
     fontSize: 10,
     fontWeight: 'bold',
-    color: '#808080',
+    color: '#808080'
   },
   tipoAnimalContainer: {
-    marginTop: 5,
+    marginTop: 5
   },
   pesoAnimal: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 18
   },
   localAnimalContainer: {
     flexDirection: 'row',
-    marginTop: 8,
+    marginTop: 8
   },
   iconeLocal: {
     fontSize: 22,
-    color: '#0047ab',
+    color: '#0047ab'
   },
   localAnimal: {
     marginTop: 3,
     marginLeft: 6,
-    color: '#696969',
+    color: '#696969'
   },
   icon: {
-    fontSize: 22,
+    fontSize: 22
   },
 });
 
