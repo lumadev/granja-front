@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { StyleSheet, SafeAreaView, ScrollView, View, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View, Text, RefreshControlBase } from 'react-native';
 import {API_URL} from '../../app.consts';
 import TipoAnimalBadge from './TipoAnimalBadge';
 import AppUtils from '../../app.utils';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class AnimaProfile extends Component {
   state = {
@@ -28,6 +30,10 @@ class AnimaProfile extends Component {
     });
   }
 
+  navigateToEdit(animalId) {
+    this.props.navigation.navigate('ProfileEdit', {animalId})
+  }
+
   render() {
     const { animal } = this.state;
 
@@ -39,6 +45,9 @@ class AnimaProfile extends Component {
               <Text style={styles.title}>{animal?.nome}</Text>
               <View style={styles.containerBadge}>
                 <TipoAnimalBadge tipoAnimal={animal?.tipo}></TipoAnimalBadge>
+              </View>
+              <View style={styles.containerEdit}>
+                <Icon style={styles.iconEdit} name="md-create" onPress={() => this.navigateToEdit(animal.id)} />
               </View>
             </View>
             <View style={styles.containerInfo}>
@@ -92,6 +101,13 @@ const styles = StyleSheet.create({
   containerBadge: {
     marginLeft: 16,
     justifyContent: 'center',
+  },
+  containerEdit: {
+    justifyContent: 'center',
+  },
+  iconEdit: {
+    marginLeft: 25,
+    fontSize: 18
   },
   infoFont: {
     fontSize: 16,

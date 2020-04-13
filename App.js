@@ -7,11 +7,12 @@
  */
 
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack'
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack'
 
 import AnimalList from './src/components/animal/AnimalList';
 import AnimalProfile from './src/components/animal/AnimalProfile';
+import ProfileEdit from './src/components/animal/ProfileEdit';
 
 export default function App() {
   return (
@@ -32,6 +33,12 @@ const AppNavigator = createStackNavigator({
     screen: AnimalProfile,
     navigationOptions: {
       title: 'Perfil do Animal'
+    },
+  },
+  ProfileEdit: {
+    screen: ProfileEdit,
+    navigationOptions: {
+      title: 'Editar Perfil'
     },
   }
 });
