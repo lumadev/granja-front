@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {TouchableHighlight, StyleSheet, View, Text} from 'react-native';
 import TipoAnimalBadge from './TipoAnimalBadge';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,43 +10,45 @@ class AnimalCard extends Component {
     const { animal, navigateToProfile, createAlertDelete } = this.props;
 
     return (
-      <View style={styles.card}>
-        <View style={styles.container}>
-          <View style={styles.containerAnimal}>
-            <View>
-              <Text style={styles.nomeAnimal}>{animal.nome}</Text>
-            </View>
-            <View style={styles.containerInfo}>
+      <TouchableHighlight onPress={() => navigateToProfile(animal.id)} underlayColor="white">
+        <View style={styles.card}>
+          <View style={styles.container}>
+            <View style={styles.containerAnimal}>
               <View>
+                <Text style={styles.nomeAnimal}>{animal.nome}</Text>
+              </View>
+              <View style={styles.containerInfo}>
                 <View>
-                  <Text style={styles.subtitulo}>Tipo de Animal</Text>
+                  <View>
+                    <Text style={styles.subtitulo}>Tipo de Animal</Text>
+                  </View>
+                  <View style={styles.tipoAnimalContainer}>
+                    <TipoAnimalBadge tipoAnimal={animal.tipo}></TipoAnimalBadge>
+                  </View>
                 </View>
-                <View style={styles.tipoAnimalContainer}>
-                  <TipoAnimalBadge tipoAnimal={animal.tipo}></TipoAnimalBadge>
+                <View style={styles.containerPeso}>
+                  <View>
+                    <Text style={styles.subtitulo}>Peso</Text>
+                  </View>
+                  <View style={styles.pesoAnimal}>
+                    <Text style={styles.pesoAnimal}>344,5 kg</Text>
+                  </View>
                 </View>
               </View>
-              <View style={styles.containerPeso}>
-                <View>
-                  <Text style={styles.subtitulo}>Peso</Text>
-                </View>
-                <View style={styles.pesoAnimal}>
-                  <Text style={styles.pesoAnimal}>344,5 kg</Text>
+              <View>
+                <View style={styles.localAnimalContainer}>
+                  <Icon style={styles.iconeLocal} name="md-home" size={25} />
+                  <Text style={styles.localAnimal}>{animal.localizacao}</Text>
                 </View>
               </View>
             </View>
-            <View>
-              <View style={styles.localAnimalContainer}>
-                <Icon style={styles.iconeLocal} name="md-home" size={25} />
-                <Text style={styles.localAnimal}>{animal.localizacao}</Text>
-              </View>
+            <View style={styles.containerBotoes}>
+              <Icon style={styles.icon} name="md-eye" />
+              <Icon style={styles.icon} name="md-trash" onPress={() => createAlertDelete(animal.id)} />
             </View>
-          </View>
-          <View style={styles.containerBotoes}>
-            <Icon style={styles.icon} name="md-eye" onPress={() => navigateToProfile(animal.id)} />
-            <Icon style={styles.icon} name="md-trash" onPress={() => createAlertDelete(animal.id)} />
           </View>
         </View>
-      </View>
+      </TouchableHighlight>
     );
   }
 }
