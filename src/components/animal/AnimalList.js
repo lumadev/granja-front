@@ -5,7 +5,6 @@ import {API_URL} from '../../app.consts';
 import AnimalSearch from './AnimalSearch';
 import AnimalCard from './AnimalCard';
 import AppUtils from '../../app.utils';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 class AnimalList extends Component {
   state = {
