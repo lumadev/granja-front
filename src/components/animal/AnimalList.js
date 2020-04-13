@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Alert} from 'react-native';
 import {API_URL} from '../../app.consts';
+import AnimalSearch from './AnimalSearch';
 import AnimalCard from './AnimalCard';
 import AppUtils from '../../app.utils';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -109,22 +110,10 @@ class AnimalList extends Component {
       <SafeAreaView>
         <ScrollView>
           <Text style={styles.title}>Lista de animais</Text>
-          <View style={[styles.searchContainer, styles.searchNome]}>
-            <Icon style={styles.iconSearch} name="md-search" />
-            <TextInput 
-              style={styles.inputSearch}
-              placeholder="Nome"
-              onChange={(event) => {this.handleChangeNome(event.nativeEvent.text)}}
-            />
-          </View>
-          <View style={[styles.searchContainer, styles.searchLocalizacao]}>
-            <Icon style={styles.iconSearch} name="md-search" />
-            <TextInput 
-              style={styles.inputSearch}
-              placeholder="Localização"
-              onChange={(event) => {this.handleChangeLocalizacao(event.nativeEvent.text)}}
-            />
-          </View>
+          <AnimalSearch 
+            handleChangeNome={this.handleChangeNome.bind(this)}
+            handleChangeLocalizacao={this.handleChangeLocalizacao.bind(this)}>
+          </AnimalSearch> 
           <View style={styles.cardContainer}>
             {cards}
           </View>
@@ -146,31 +135,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginBottom: 12
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 16,
-    borderColor: '#dcdcdc',
-    borderWidth: 1,
-    borderRadius: 8,
-    backgroundColor: 'white'
-  },
-  searchNome: {
-    marginTop: 10
-  },
-  searchLocalizacao: {
-    marginTop: 10,
-    marginBottom: 4
-  },
-  iconSearch: {
-    marginLeft: 14,
-    flex: 0.08,
-    fontSize: 20,
-    color: '#c0c0c0'
-  },
-  inputSearch: {
-    flex: 0.92
-  }
 });
 
 export default AnimalList;
