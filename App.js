@@ -7,113 +7,40 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack'
 
-import {
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import AnimalList from './src/components/animal/AnimalList';
+import AnimalProfile from './src/components/animal/AnimalProfile';
+import ProfileEdit from './src/components/animal/ProfileEdit';
 
-const App: () => React$Node = () => {
+export default function App() {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView>
-          <Text>Lista de animais</Text>
-          <View style={styles.container}>
-            <View style={styles.card}>
-              <View style={styles.nomeAnimal}>
-                <Text>Cocoricó</Text>
-              </View>
-              <View style={styles.containerInfo}>
-                <View class={styles.containerTipo}>
-                  <View style={styles.subtitulo}>
-                    <Text>Tipo de Animal</Text>
-                  </View>
-                  <View style={styles.tipoAnimalBadge}>
-                    <Text>Poultry</Text>
-                  </View>
-                </View>
-                <View class={styles.containerPeso}>
-                  <View style={styles.subtitulo}>
-                    <Text>Peso</Text>
-                  </View>
-                  <View style={styles.pesoAnimal}>
-                    <Text>344,5 kg</Text>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.localAnimalContainer}>
-                <View style={styles.localAnimalContainer}>
-                  <Text>Icone</Text>
-                  <Text style={styles.localAnimal}>Galpão 1</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.container}>
-            <View style={styles.card}>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <AppContainer />
     </>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column'
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: AnimalList,
+    navigationOptions: {
+      headerShown: false
+    },
   },
-  card: {
-    flex: 1,
-    marginTop: 15,
-    marginHorizontal: 10,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#87ceeb',
-    borderRadius: 3,
+  Profile: {
+    screen: AnimalProfile,
+    navigationOptions: {
+      title: 'Perfil do Animal'
+    },
   },
-  nomeAnimal: {
-
-  },
-  containerInfo: {
-    flexDirection: 'row', 
-  },
-  containerTipo: {
-    flex: 1
-  },
-  subtitulo: {
-    
-  },
-  tipoAnimalBadge: {
-    
-  },
-  containerPeso: {
-    flex: 1
-  },
-  pesoAnimal: {
-
-  },
-  localAnimalContainer: {
-    flexDirection: 'row'
-  },
-  iconeLocal: {
-
-  },
-  localAnimal: {
-
-  },
+  ProfileEdit: {
+    screen: ProfileEdit,
+    navigationOptions: {
+      title: 'Editar Perfil'
+    },
+  }
 });
 
-export default App;
+const AppContainer = createAppContainer(AppNavigator);
