@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { StyleSheet, SafeAreaView, ScrollView, View, Text, RefreshControlBase } from 'react-native';
+import { TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, View, Text } from 'react-native';
 import {API_URL} from '../../app.consts';
 import TipoAnimalBadge from './TipoAnimalBadge';
 import AppUtils from '../../app.utils';
@@ -43,12 +43,15 @@ class AnimaProfile extends Component {
           <View style={styles.containerProfile}>
             <View style={styles.containerTitle}>
               <Text style={styles.title}>{animal?.nome}</Text>
-              <View style={styles.containerBadge}>
-                <TipoAnimalBadge tipoAnimal={animal?.tipo}></TipoAnimalBadge>
-              </View>
-              <View style={styles.containerEdit}>
-                <Icon style={styles.iconEdit} name="md-create" onPress={() => this.navigateToEdit(animal.id)} />
-              </View>
+              <TouchableOpacity style={styles.containerLinkEdit} onPress={() => this.navigateToEdit(animal.id)}>
+                <View style={styles.containerEdit}>
+                  <Text style={styles.textEdit}>Editar</Text>
+                  <Icon style={styles.iconEdit} name="md-create" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.containerBadge}>
+              <TipoAnimalBadge tipoAnimal={animal?.tipo}></TipoAnimalBadge>
             </View>
             <View style={styles.containerInfo}>
               <Text style={[styles.tipoInfo, styles.infoFont]}>Status: </Text>
@@ -99,15 +102,24 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   containerBadge: {
-    marginLeft: 16,
-    justifyContent: 'center'
+    marginTop: 5,
+    marginBottom: 10,
+  },
+  containerLinkEdit: {
+    marginLeft: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerEdit: {
-    justifyContent: 'center'
+    marginLeft: 10,
+    flexDirection: 'row'
+  },
+  textEdit: {
+    fontSize: 15
   },
   iconEdit: {
-    marginLeft: 25,
-    fontSize: 18
+    marginLeft: 10,
+    fontSize: 17
   },
   infoFont: {
     fontSize: 16
