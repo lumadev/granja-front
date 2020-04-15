@@ -1,5 +1,7 @@
 START TRANSACTION;
 
+CREATE SCHEMA granja;
+
 -- Table: granja.fase_producao
 
 -- DROP TABLE granja.fase_producao;
