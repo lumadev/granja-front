@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { SafeAreaView, ScrollView, StyleSheet, View, Text, Alert } from 'react-native';
+import { Dimensions, StyleSheet, FlatList, View, Text, Alert } from 'react-native';
 import {API_URL} from '../../app.consts';
 import AnimalSearch from './AnimalSearch';
 import AnimalCard from './AnimalCard';
 import AppUtils from '../../app.utils';
+
+const itemsPerPage = 5;
 
 class AnimalList extends Component {
   state = {
@@ -12,7 +14,9 @@ class AnimalList extends Component {
     animals: [],
     nomeSearch: '',
     localizacaoSearch: '',
-    showLoader: false
+    showLoader: false,
+    page: 1,
+    loadingItems: false
   };
 
   componentDidMount() {
@@ -20,11 +24,22 @@ class AnimalList extends Component {
   }
 
   listaAnimais() {
-    axios.get(`${API_URL}/animal`).then((res) => {
-      const animals = res.data;
+    const isSearching = this.state.nomeSearch !== '' || this.state.localizacaoSearch !== '';
+    if (isSearching) {
+      return;
+    }
+    const { page, animals } = this.state;
+
+    this.setState({ loadingItems: true });
+
+    axios.get(`${API_URL}/animal?limit=${itemsPerPage}&page=${page}`).then((res) => {
+      const animalsApi = res.data;
+
       this.setState({ 
-        animals,
-        animalsApi: animals
+        animals: [ ...animals, ...animalsApi ],
+        animalsApi: [ ...animals, ...animalsApi ],
+        page: page + 1,
+        loadingItems: false
       });
     });
   }
@@ -93,41 +108,44 @@ class AnimalList extends Component {
     );
   }
 
+  renderItem = ({ item }) => (
+    <AnimalCard 
+      key={item.id} 
+      animal={item}
+      navigateToProfile={this.navigateToProfile.bind(this)}
+      createAlertDelete={this.createAlertDelete.bind(this)}>
+    </AnimalCard>
+  );
+
   render() {
     const { animals } = this.state;
-    let cards = null;
-
-    if (animals.length > 0) {
-      cards = animals.map((item, index) => {
-        return (
-          <AnimalCard 
-            key={item.id} 
-            animal={item}
-            navigateToProfile={this.navigateToProfile.bind(this)}
-            createAlertDelete={this.createAlertDelete.bind(this)}>
-          </AnimalCard>
-        );
-      });
-    }
 
     return (
-      <SafeAreaView>
-        <ScrollView>
-          <Text style={styles.title}>Lista de animais</Text>
-          <AnimalSearch 
-            handleChangeNome={this.handleChangeNome.bind(this)}
-            handleChangeLocalizacao={this.handleChangeLocalizacao.bind(this)}>
-          </AnimalSearch> 
-          <View style={styles.cardContainer}>
-            {cards}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <View style={styles.container}>
+        <Text style={styles.title}>Lista de animais</Text>
+        <AnimalSearch 
+          handleChangeNome={this.handleChangeNome.bind(this)}
+          handleChangeLocalizacao={this.handleChangeLocalizacao.bind(this)}>
+        </AnimalSearch>
+        <FlatList
+          data={animals}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+          onEndReached={this.listaAnimais.bind(this)}
+          onEndReachedThreshold={0.1}
+        />
+        <View style={styles.lastItem}></View>
+      </View>
     );
   }
 }
 
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
+  container: {
+    height: windowHeight,
+  },
   title: {
     marginTop: 50,
     marginLeft: 25,
@@ -136,9 +154,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#1c1c1c'
   },
-  cardContainer: {
-    marginBottom: 12
-  },
+  lastItem: {
+    marginBottom: 37
+  }
 });
 
 export default AnimalList;
